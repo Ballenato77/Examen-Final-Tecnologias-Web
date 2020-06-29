@@ -1,0 +1,35 @@
+<div class="container mt-3">
+  <div class="row text-center">
+    <div class="col-lg-6">
+      <div *ngIf="isInvalid" class="alert alert-danger mt-3">
+        <strong>Fecha Inválida</strong> Debe de ingresar una fecha anterior o la fecha del día de hoy.
+        </div>
+          <mat-form-field appearance="fill">
+            <label class="alinee">Escoge una fecha</label>
+            <input matInput class="form-control" [max]="maxDate" [matDatepicker]="picker" [value]="date.value" (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <button class="botoncito" mat-button color="primary" (click)="getInfoData()" [disabled]="isDisabled">Ver</button>
+          </mat-form-field>
+        </div>
+       <div class="col-lg-6">
+         <div *ngIf="isNotEmpty">
+           <div class="card-deck">
+             <div class="card text-center">
+               <img *ngIf="info.media_type=='image'" class="img-fluid" src="{{info.url}}" />
+               <iframe *ngIf="info.media_type=='video'" width="420" height="315" [src]='sanitizer.bypassSecurityTrustResourceUrl(info.url)'></iframe>
+               <div class="card-body">
+                 <h5 class="card-title">{{info.title}}</h5>
+                 <p class="card-text">
+                   Información: {{info.explanation}}
+                 </p>
+                 <div class="card-footer text-muted">
+                   {{info.date}}
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div> 
+       </div>
+      </div>
+    </div>
